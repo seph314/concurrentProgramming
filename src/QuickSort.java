@@ -3,10 +3,17 @@
  */
 public class QuickSort extends Thread {
 
+    /**
+     * Constructor that thakes a integer array
+     */
+    int[] array;
+    QuickSort(int[] array) {
+        this.array = array;
+    }
 
     @Override
     public void run() {
-
+        quickSort(array);
     }
 
     /*
