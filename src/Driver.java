@@ -13,7 +13,7 @@ public class Driver {
     public static void startSomeThreads(){
         QuickSort quickSort;
 
-        // start 10 threads
+        // start 10 threads and prints their names
         for (int i=10; i > 0; i--){
             System.out.println("Thread: " + new QuickSort().getName() + " up and running");
         }
