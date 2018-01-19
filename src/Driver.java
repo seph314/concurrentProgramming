@@ -13,11 +13,11 @@ public class Driver {
         int numberOfCores = Runtime.getRuntime().availableProcessors();
 
         // create a random Integer array
-        int[] array = new int[100];
+        int[] array = new int[1000];
         Random random = new Random();
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 1000; i++)
         {
-            array[i] = random.nextInt(1000);
+            array[i] = random.nextInt(100);
         }
 
 

@@ -1,7 +1,11 @@
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Quicksort extends Thread and implements it'own version of the run() function
  */
 public class QuickSort extends Thread {
+
+    private ReentrantLock reentrantLock = new ReentrantLock();
 
     /**
      * Constructor that thakes a integer array
@@ -32,13 +36,17 @@ public class QuickSort extends Thread {
      */
     void quickSort(int array[], int left, int right) {
 
+        reentrantLock.lock();
         int index = partition(array, left, right);
+        reentrantLock.unlock();
 
         if (left < index - 1)
             quickSort(array, left, index - 1);
 
         if (index < right)
             quickSort(array, index, right);
+
+
     }
 
     private int partition(int array[], int left, int right)
