@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
@@ -13,9 +12,9 @@ public class Driver {
         int numberOfCores = Runtime.getRuntime().availableProcessors();
 
         // create a random Integer array
-        int[] array = new int[1000];
+        int[] array = new int[20];
         Random random = new Random();
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 20; i++)
         {
             array[i] = random.nextInt(100);
         }
@@ -33,8 +32,8 @@ public class Driver {
         // starts 4 threads and sorts
         for (int i=0; i<numberOfCores; i++){
             QuickSort quickSort = new QuickSort(array);
-            quickSort.start();
-            System.out.println("Thread name: " + quickSort.getName());
+            quickSort.start(); // checks for the run method and starts a new thread
+            // System.out.println("Thread name: " + quickSort.getName());
         }
 
         // gets time after execution

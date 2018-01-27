@@ -17,6 +17,20 @@ public class QuickSort extends Thread {
 
     @Override
     public void run() {
+
+        // example to illustrate multithreading
+        for (int i=0; i<10; i++){
+            System.out.println("Thread name " + getName() + " loop " + i);
+
+            // sleeps for a while (1/10s second)
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // calls quickSort
         quickSort(array);
     }
 
@@ -24,6 +38,7 @@ public class QuickSort extends Thread {
     * Creates left and right value and calls the correct method with these
     * */
     void quickSort(int[] array){
+
         quickSort(array, 0, array.length-1);
 
     }
@@ -36,9 +51,12 @@ public class QuickSort extends Thread {
      */
     void quickSort(int array[], int left, int right) {
 
-        reentrantLock.lock();
+//        reentrantLock.lock();
+        //System.out.println(getName());
+//        reentrantLock.unlock();
+
+
         int index = partition(array, left, right);
-        reentrantLock.unlock();
 
         if (left < index - 1)
             quickSort(array, left, index - 1);
