@@ -53,22 +53,29 @@ public class QuickSort extends Thread{
      */
     void  quickSort(int array[], int left, int right) throws InterruptedException {
 
-
 //        int length = right - left + 1;
 //        reentrantLock.lock();
         //System.out.println(getName());
 //        reentrantLock.unlock();
 
+        reentrantLock.lock();
         int index = partition(array, left, right);
-
+        reentrantLock.unlock();
 //        System.out.println(getName());
-        if (left < index - 1)
-            quickSort(array, left, index - 1);
 
-        if (index < right)
+        if (left < index - 1){
+            quickSort(array, left, index - 1);
+        }
+
+        if (index < right){
             quickSort(array, index, right);
+        }
 
         join();
+
+
+
+
 //        System.out.println("length: " + length);
 //        System.out.println("max length: " + arrayLenghtPerCore);
 
