@@ -1,5 +1,3 @@
-import java.io.IOException;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * The tee command reads the standard  input and writes it to both the standard output and to the file filename.
@@ -10,34 +8,16 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class TeeDriver {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        ReentrantLock lock = new ReentrantLock();
-        String text;
+        final Model model = new Model();
 
-        Tee tee1 = new Tee();
-        Tee tee2 = new Tee();
-        Tee tee3 = new Tee();
+        ReadStandardInput thread0 = new ReadStandardInput(model);
+        WriteStandardOutput thread1 = new WriteStandardOutput(model);
+        WriteToFile thread2 = new WriteToFile(model);
 
-        tee1.start();
-        tee2.start();
-        tee3.start();
-
-        lock.lock();
-        try{
-            text = tee1.readStandarsInput();
-        }finally {
-            lock.unlock();
-        }
-
-        try {
-            tee1.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        tee2.writeStandardOutput(text);
-        tee3.writeToFile(text);
-
+        thread0.start();
+        thread1.start();
+        thread2.start();
     }
 }
