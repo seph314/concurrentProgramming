@@ -1,8 +1,10 @@
+package Tee;
+
 public class WriteStandardOutput extends Thread{
 
     Model model;
 
-    public  WriteStandardOutput (Model model){
+    WriteStandardOutput(Model model){
         this.model = model;
     }
 

@@ -1,9 +1,11 @@
+package Tee;
+
 import java.io.IOException;
 
 public class WriteToFile extends Thread {
-    Model model;
+    Tee.Model model;
 
-    public  WriteToFile (Model model){
+    WriteToFile(Tee.Model model){
         this.model = model;
     }
 

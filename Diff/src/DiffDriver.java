@@ -6,5 +6,8 @@
  * diff prints all extra lines in the longer file to the standard output.
  */
 public class DiffDriver {
+    public static void main(String[] args) {
+        System.out.println("Doit");
+    }
 
 }

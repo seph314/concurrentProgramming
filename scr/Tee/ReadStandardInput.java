@@ -1,8 +1,10 @@
+package Tee;
+
 public class ReadStandardInput extends Thread {
 
-    Model model;
+    Tee.Model model;
 
-    public  ReadStandardInput (Model model){
+    ReadStandardInput(Tee.Model model){
         this.model = model;
     }
 

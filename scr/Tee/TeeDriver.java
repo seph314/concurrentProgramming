@@ -1,3 +1,4 @@
+package Tee;
 
 /**
  * The tee command reads the standard  input and writes it to both the standard output and to the file filename.
@@ -10,14 +11,14 @@ public class TeeDriver {
 
     public static void main(String[] args) {
 
-        final Model model = new Model();
+        final Tee.Model model = new Tee.Model();
 
-        ReadStandardInput thread0 = new ReadStandardInput(model);
-        WriteStandardOutput thread1 = new WriteStandardOutput(model);
-        WriteToFile thread2 = new WriteToFile(model);
+        Tee.ReadStandardInput thread0 = new Tee.ReadStandardInput(model);
+        Tee.WriteStandardOutput thread1 = new Tee.WriteStandardOutput(model);
+        Tee.WriteToFile thread2 = new Tee.WriteToFile(model);
 
-        thread0.start();
-        thread1.start();
-        thread2.start();
+            thread1.start();
+            thread2.start();
+            thread0.start();
     }
 }
