@@ -9,14 +9,16 @@ public class QuickSort extends Thread{
     int[] array;
     int left;
     int right;
+    int numberOfCores;
 
     /**
      * Constructor that thakes a integer array
      */
-    QuickSort(int[] array) {
+    QuickSort(int[] array, int numberOfCores) {
         this.array = array;
         this.left = 0;
         this.right = array.length-1;
+        this.numberOfCores = numberOfCores;
     }
 
     /**
@@ -37,10 +39,14 @@ public class QuickSort extends Thread{
     @Override
     public void run() {
         // calls quickSort
+        reentrantLock.lock();
         try {
             quickSort(array, left, right);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        finally {
+            reentrantLock.unlock();
         }
     }
 
@@ -58,20 +64,37 @@ public class QuickSort extends Thread{
         //System.out.println(getName());
 //        reentrantLock.unlock();
 
-        reentrantLock.lock();
         int index = partition(array, left, right);
-        reentrantLock.unlock();
+
 //        System.out.println(getName());
 
-        if (left < index - 1){
-            quickSort(array, left, index - 1);
+
+        if (numberOfCores > 0) {
+            if (left < index - 1) {
+                new QuickSort(array, left, index - 1);
+            }
+
+            if (index < right) {
+                new QuickSort(array, left, index - 1);
+            }
+        }
+        else{
+            if (left < index - 1){
+                quickSort(array, left, index - 1);
+            }
+
+            if (index < right){
+                quickSort(array, index, right);
+            }
         }
 
-        if (index < right){
-            quickSort(array, index, right);
-        }
 
         join();
+
+
+
+
+
 
 
 
