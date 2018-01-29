@@ -6,27 +6,12 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Tee extends Thread{
 
-    ReentrantLock reentrantLock = new ReentrantLock();
     // input text goes here
     private String text;
 
     @Override
     public void run() {
-//        //reed
-//        reentrantLock.lock();
-//        try{
-//            readStandarsInput();
-//        }finally {
-//            reentrantLock.unlock();
-//        }
-//
-//        //write
-//        writeStandardOutput();
-//        try {
-//            writeToFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }
 
     public String readStandarsInput(){
