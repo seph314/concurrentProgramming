@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * one for writing to standard output,
  * and one for writing to file filename.
  */
-public class Driver {
+public class TeeDriver {
 
     public static void main(String[] args) throws IOException {
 
