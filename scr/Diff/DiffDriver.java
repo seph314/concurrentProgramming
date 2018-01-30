@@ -3,9 +3,6 @@ package Diff;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 
 /**
@@ -22,13 +19,8 @@ public class DiffDriver {
         String filenameTwo = "taoTeChingShort.txt";
         int lengthDifference;
 
-        AtomicInteger atomicInteger = new AtomicInteger();
-
         Reader readerOne = new Reader(filenameOne);
         Reader readerTwo = new Reader(filenameTwo);
-
-        Lock lock = new ReentrantLock();
-        Condition condition = lock.newCondition();
 
         /* start, join and String Lists
         * * * * * * * * * * * * * * * * */
@@ -43,16 +35,26 @@ public class DiffDriver {
 
 
 
-        /* start first thread for compare, check which list is biggest
+        /* start threads for compare, check which list is biggest
          * * * * * * * * * * * * * * * * */
+
+        // only one thread should reach the end
+        Counter counter = new Counter();
+
         if (listOfLinesOne.size() > listOfLinesTwo.size()){
             lengthDifference = listOfLinesOne.size() - listOfLinesTwo.size();
-            Compare compare = new Compare(listOfLinesTwo,listOfLinesOne, lengthDifference);
-            compare.start();
+            Compare firstThread = new Compare(listOfLinesTwo,listOfLinesOne, lengthDifference, 0, listOfLinesTwo.size()/2-1, counter.getAtomicInteger());
+            Compare secondThread = new Compare(listOfLinesTwo,listOfLinesOne, lengthDifference, listOfLinesTwo.size()/2, listOfLinesTwo.size(), counter.getAtomicInteger());
+            firstThread.start();
+            secondThread.start();
         }else {
-            lengthDifference = listOfLinesTwo.size()-listOfLinesOne.size();
-            Compare compare = new Compare(listOfLinesTwo,listOfLinesOne, lengthDifference);
-            compare.start();
+            lengthDifference = listOfLinesTwo.size() - listOfLinesOne.size();
+            Compare firstThread = new Compare(listOfLinesTwo,listOfLinesOne, lengthDifference, 0, listOfLinesOne.size()/2-1, counter.getAtomicInteger());
+            Compare secondThread = new Compare(listOfLinesTwo,listOfLinesOne, lengthDifference, listOfLinesOne.size()/2, listOfLinesOne.size(), counter.getAtomicInteger());
+            firstThread.start();
+            secondThread.start();
         }
+
+
     }
 }
