@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class Driver {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // get number of cores
         int numberOfCores = Runtime.getRuntime().availableProcessors();
@@ -18,7 +18,8 @@ public class Driver {
         Random random = new Random();
         for (int i = 0; i < 20; i++)
         {
-            arraySingle[i] = arrayMulti[i] = random.nextInt(100);
+            arraySingle[i] = random.nextInt(100);
+            arrayMulti[i] = random.nextInt(100);
         }
 
         // calls multithread function
@@ -36,25 +37,24 @@ public class Driver {
      * Does multithreading things
      * @param array
      */
-    private static long multiThread(int[] array, int numberOfCores){
-
+    private static long multiThread(int[] array, int numberOfCores) throws InterruptedException {
 
         // get the length of the array split by numberOfCores
         int arrayLenghPerCore = array.length/numberOfCores;
 
         // prints the array before sorting it
-//        for (int i :array){
-//            System.out.println("Unsorted array: " + i);
-//        }
         System.out.println("Multithread arrays");
         System.out.println(Arrays.toString(array));
 
         // gets time before execution
         long startTime = new Date().getTime();
-        //System.out.println("Starttime: " + startTime);
+
+        // starts 1 thread
+//        QuickSort quickSort = new QuickSort(array);
+//        quickSort.start();
+        QuickSort quickSort = new QuickSort(array);
 
         // starts 4 threads and sorts
-        new QuickSort(array, numberOfCores);
 //        for (int i=0; i<numberOfCores; i++){
 //            QuickSort quickSort = new QuickSort(array, numberOfCores);
 //            quickSort.start(); // checks for the run method and starts a new thread
@@ -63,14 +63,9 @@ public class Driver {
 
         // gets time after execution
         long endTime = new Date().getTime();
-      //  System.out.println("Endtime: " + endTime);
 
         // prints the array after sorting it
-//        for (int i :array){
-//            System.out.println("QuickSorted array: " + i);
-//        }
         System.out.println(Arrays.toString(array));
-
 
         // return time
         return endTime -startTime;
@@ -83,18 +78,13 @@ public class Driver {
      */
     private static long singleThread(int[] array){
 
-
         // prints the array before sorting it
-//        for (int i :array){
-//            System.out.println("Single thread unsorted array: " + i);
-//        }
         System.out.println("Singlethread arrays");
         System.out.println(Arrays.toString(array));
 
 
         // gets time before execution
         long startTime = new Date().getTime();
-//        System.out.println("Starttime: " + startTime);
 
         // starts QuickSortSingleThread
         QuickSortSingleThread quickSortSingleThread = new QuickSortSingleThread(array);
@@ -102,17 +92,11 @@ public class Driver {
 
         // gets time after execution
         long endTime = new Date().getTime();
-       // System.out.println("Endtime: " + endTime);
 
         // prints the array after sorting it
-//        for (int i :array){
-//            System.out.println("Single thread QuickSorted array: " + i);
-//        }
         System.out.println(Arrays.toString(array));
-
 
         // return time
         return endTime - startTime;
-
     }
 }
