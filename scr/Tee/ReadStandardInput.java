@@ -2,16 +2,20 @@ package Tee;
 
 public class ReadStandardInput extends Thread {
 
-    Tee.Model model;
+    Model model;
 
-    ReadStandardInput(Tee.Model model){
+    ReadStandardInput(Model model){
         this.model = model;
     }
 
     @Override
     public void run() {
         System.out.println("Read from standard input: " + getName());
-        model.readStandardInput();
+        try {
+            model.readStandardInput();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -3,9 +3,9 @@ package Tee;
 import java.io.IOException;
 
 public class WriteToFile extends Thread {
-    Tee.Model model;
+    Model model;
 
-    WriteToFile(Tee.Model model){
+    WriteToFile(Model model){
         this.model = model;
     }
 
