@@ -33,28 +33,26 @@ public class Model {
         lock.unlock();
     }
 
-    public void writeStandardOutput() {
+    public void writeStandardOutput() throws InterruptedException {
         lock.lock();
+        condition.await();
         try {
-            condition.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
             System.out.println(getText());
+        } finally {
+            lock.unlock();
         }
-        lock.unlock();
+
     }
 
-    public void writeToFile() throws IOException {
+    public void writeToFile() throws IOException, InterruptedException {
         lock.lock();
-        try {
-            condition.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        condition.await();
+        try{
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename + ".md"));
+            bufferedWriter.write(getText());
+            bufferedWriter.close();
+        }finally {
+            lock.unlock();
         }
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename + ".md"));
-        bufferedWriter.write(getText());
-        bufferedWriter.close();
-        lock.unlock();
     }
 }

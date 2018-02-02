@@ -11,6 +11,10 @@ public class WriteStandardOutput extends Thread{
     @Override
     public void run() {
         System.out.println("Write to Standard Output: " + getName());
-        model.writeStandardOutput();
+        try {
+            model.writeStandardOutput();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

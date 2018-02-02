@@ -2,8 +2,6 @@ package Diff;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 
 /**
  * The isDiff command compares corresponding lines in the given files and
@@ -11,12 +9,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * If one of the files is longer then the other,
  * isDiff prints all extra lines in the longer file to the standard output.
+ *
+ * A text file with approx 128000 rows takes 20ms with multithreading and 56 with singlethreading
  */
 public class DiffDriver {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        String filenameOne = "taoTeChingLong.txt";
-        String filenameTwo = "taoTeChingShort.txt";
+//        String filenameOne = "taoTeChingLong.txt";
+//        String filenameTwo = "taoTeChingShort.txt";
+
+        String filenameOne = "big.txt";
+        String filenameTwo = "big2.txt";
+
+
         int lengthDifference;
 
         Reader readerOne = new Reader(filenameOne);
@@ -55,6 +60,10 @@ public class DiffDriver {
             secondThread.start();
         }
 
+//         take time for a single thread
+//        lengthDifference = listOfLinesOne.size() - listOfLinesTwo.size();
+//        Compare compareSingleThread = new Compare(listOfLinesTwo, listOfLinesOne, lengthDifference, 0, listOfLinesTwo.size(), 0);
+//        compareSingleThread.singleThread();
 
     }
 }

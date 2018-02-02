@@ -13,7 +13,11 @@ public class WriteToFile extends Thread {
     public void run() {
         System.out.println("Write to file: " + getName());
         try {
-            model.writeToFile();
+            try {
+                model.writeToFile();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

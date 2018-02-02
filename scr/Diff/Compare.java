@@ -1,5 +1,6 @@
 package Diff;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -62,6 +63,8 @@ public class Compare extends Thread {
 //                System.out.println(anotherList.get(i) + "\n" + oneList.get(i));
 //            }
 //        }
+        long startTime = new Date().getTime();
+
         lock.lock();
         for (int i = start; i < stop - 1; i++) {
             if (diff.isDiff(anotherList.get(i), oneList.get(i))) {
@@ -80,16 +83,29 @@ public class Compare extends Thread {
         }
         lock.unlock();
 
-// SINGLE THREAD WORKING
-//        for (int i=0; i < oneList.size()-1; i++){
-//            if (diff.isDiff(anotherList.get(i), oneList.get(i))){
-//                System.out.println(anotherList.get(i) + "\n" + oneList.get(i));
-//            }
-//        }
-//        // print the remaining rows in the longer list
-//        for (int i=anotherList.size()-lengthDifference; i < anotherList.size(); i++){
-//            System.out.println(anotherList.get(i));
-//        }
+        long endTime = new Date().getTime();
+        System.out.println("Time: " + (endTime - startTime));
+
+
+    }
+
+    public void singleThread(){
+        long startTime = new Date().getTime();
+
+        System.out.println("Single thread");
+        Diff diff = new Diff();
+        for (int i=0; i < oneList.size()-1; i++){
+            if (diff.isDiff(anotherList.get(i), oneList.get(i))){
+                System.out.println(anotherList.get(i) + "\n" + oneList.get(i));
+            }
+        }
+        // print the remaining rows in the longer list
+        for (int i=anotherList.size()-lengthDifference; i < anotherList.size(); i++){
+            System.out.println(anotherList.get(i));
+        }
+
+        long endTime = new Date().getTime();
+        System.out.println("Time: " + (endTime - startTime));
     }
 
 }
