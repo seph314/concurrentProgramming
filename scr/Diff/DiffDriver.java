@@ -60,7 +60,7 @@ public class DiffDriver {
             secondThread.start();
         }
 
-//         take time for a single thread
+        // take time for a single thread
 //        lengthDifference = listOfLinesOne.size() - listOfLinesTwo.size();
 //        Compare compareSingleThread = new Compare(listOfLinesTwo, listOfLinesOne, lengthDifference, 0, listOfLinesTwo.size(), 0);
 //        compareSingleThread.singleThread();

@@ -4,24 +4,11 @@
  */
 public class QuickSortSingleThread{
 
-
     /**
      * Constructor that thakes a integer array
      */
-    int[] array;
     QuickSortSingleThread(int[] array) {
-        this.array = array;
-        quickSort(array);
-    }
-
-
-    /*
-     * Creates left and right value and calls the correct method with these
-     * */
-    void quickSort(int[] array){
-
         quickSort(array, 0, array.length-1);
-
     }
 
     /**
@@ -30,8 +17,7 @@ public class QuickSortSingleThread{
      * @param left is the leftmost value in the array
      * @param right is the rightmost value in teh array
      */
-    void quickSort(int array[], int left, int right) {
-
+    private void quickSort(int array[], int left, int right) {
 
         int index = partition(array, left, right);
 
@@ -40,8 +26,6 @@ public class QuickSortSingleThread{
 
         if (index < right)
             quickSort(array, index, right);
-
-
     }
 
     private int partition(int array[], int left, int right)

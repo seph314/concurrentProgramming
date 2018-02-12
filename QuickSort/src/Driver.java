@@ -1,20 +1,13 @@
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 /**
  * Driver class that uses QuickSort Threads
  */
 public class Driver {
-
-    // create a thread pool
-//    Executor pool = Executors.newFixedThreadPool(4);
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -22,17 +15,14 @@ public class Driver {
         int numberOfCores = Runtime.getRuntime().availableProcessors();
 
         // create a random Integer array
-        int[] arrayMulti = new int[20000];
-        int[] arraySingle = new int[20000];
+        int[] arrayMulti = new int[80000];
+        int[] arraySingle = new int[80000];
         Random random = new Random();
-        for (int i = 0; i < 20000; i++)
+        for (int i = 0; i < 80000; i++)
         {
             arraySingle[i] = random.nextInt(100);
             arrayMulti[i] = random.nextInt(100);
         }
-
-//        QuickSort quickSort = new QuickSort();
-//        threadPool.submit(quickSort);
 
         // calls multithread function
         long multiTime = multiThread(arrayMulti, numberOfCores);
@@ -62,33 +52,22 @@ public class Driver {
         long startTime = new Date().getTime();
 
         // starts 1 thread
-        QuickSort quickSort = new QuickSort(array, 0, array.length-1, count);
+        QuickSort quickSort = new QuickSort(array, 0, array.length-1, count, numberOfCores);
         quickSort.start();
-
-
-        // starts 4 threads and sorts
-//        for (int i=0; i<numberOfCores; i++){
-//            QuickSort quickSort = new QuickSort(array);
-//            quickSort.start(); // checks for the run method and starts a new thread
-//
-////             System.out.println("Thread name: " + quickSort.getName());
-//        }
 
         // gets time after execution
         long endTime = new Date().getTime();
-
+        long finnishTime = endTime - startTime;
 
         // prints the array after sorting it
-        /*
-
-        OBS! Problemet är att den hämtar arrayen innan den är klar
-
-         */
-        Thread.sleep(1000);
+        /* TODO the array prints before the sort is done.
+        *  Temporary fix: let the thread sleep for a while
+        *  Also, because of the same thing, the time measured is not correct */
+        Thread.sleep(2000);
         System.out.println(Arrays.toString(array));
 
         // return time
-        return endTime -startTime;
+        return finnishTime;
     }
 
 
@@ -102,13 +81,11 @@ public class Driver {
         System.out.println("Singlethread arrays");
         System.out.println(Arrays.toString(array));
 
-
         // gets time before execution
         long startTime = new Date().getTime();
 
         // starts QuickSortSingleThread
-        QuickSortSingleThread quickSortSingleThread = new QuickSortSingleThread(array);
-
+        new QuickSortSingleThread(array);
 
         // gets time after execution
         long endTime = new Date().getTime();

@@ -6,34 +6,35 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Quicksort extends Thread and implements it'own version of the run() function
+ *  Quicksort extends Thread and implements it'own version of the run() function
+ *  Choose a pivot element
+ *  Compare all elements VS pivot
+ *  Split array <pivot =pivot >pivot
+ *  Recurse on each array
  */
 public class QuickSort extends Thread {
 
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
-    Executor pool = Executors.newFixedThreadPool(4);
+    private Executor pool = Executors.newFixedThreadPool(4);
 
     // gets values from constructor
     private int[] array;
     private int left;
     private int right;
     private AtomicInteger count;
-
-    public int[] getArray() {
-        return array;
-    }
+    private int numberOfCores;
 
 
     /**
      * Constructor that thakes a integer array
      */
-    QuickSort(int[] array, int left, int right, AtomicInteger count) {
+    QuickSort(int[] array, int left, int right, AtomicInteger count, int numberOfCores) {
         this.array = array;
         this.left = left;
         this.right = right;
         this.count = count;
-//        quickSort(array,left,right);
+        this.numberOfCores = numberOfCores;
     }
 
 
@@ -49,33 +50,30 @@ public class QuickSort extends Thread {
             e.printStackTrace();
         }
 
+        // this should signal for a thread to unlock the lock inside quickSort
+        // this should create two new threads
         lock.lock();
         count.getAndDecrement();
-            if (count.get() == 1) {
-                condition.signalAll();
-            }
-        lock.unlock();
+        condition.signal();
+        lock.lock();
 
     }
 
-
     /**
-     * This shoule be implemented in the run() function I think...
-     *
+     * Uses the QuickSort algorithm to sort an array
+     * Uses multiple threads
      * @param left  is the leftmost value in the array
      * @param right is the rightmost value in teh array
      */
-    public void quickSort(int left, int right) throws InterruptedException {
-
-//        int length = right - left + 1;
+    private void quickSort(int left, int right) throws InterruptedException {
 
         int index = partition(left, right);
 
-        if (count.get() < 4) {
+        if (count.get() < numberOfCores*2) {
             lock.lock();
             count.getAndAdd(2);
-            pool.execute(new QuickSort(array, left, index - 1, count));
-            pool.execute(new QuickSort(array, index, right, count));
+            pool.execute(new QuickSort(array, left, index - 1, count, numberOfCores));
+            pool.execute(new QuickSort(array, index, right, count, numberOfCores));
             condition.await();
             lock.unlock();
         }
@@ -86,7 +84,6 @@ public class QuickSort extends Thread {
             if (index < right)
                 quickSort(index, right);
         }
-
     }
 
     private int partition(int left, int right) {

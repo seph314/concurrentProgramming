@@ -1,9 +1,5 @@
 package Tee;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * The tee command reads the standard  input and writes it to both the standard output and to the file filename.
  * Your parallel tee program should have three threads:
@@ -18,9 +14,9 @@ public class TeeDriver {
 //        final Atomic atomic = new Atomic();
         final Model model = new Tee.Model();
 
-        Tee.ReadStandardInput thread0 = new Tee.ReadStandardInput(model);
-        Tee.WriteStandardOutput thread1 = new Tee.WriteStandardOutput(model);
-        Tee.WriteToFile thread2 = new Tee.WriteToFile(model);
+        ReadStandardInput thread0 = new ReadStandardInput(model);
+        WriteStandardOutput thread1 = new WriteStandardOutput(model);
+        WriteToFile thread2 = new WriteToFile(model);
 
             thread0.start();
             thread1.start();

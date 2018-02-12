@@ -1,0 +1,40 @@
+// INFO
+Two threads are created.
+The text files are read and each line is saved in a list of strings.
+Then one thread compares the fist half of threads wile the other thread compares the other half.
+Only one threads prints the remaining rows
+
+// PERFORMANCE
+Multithread times: 24, 24, 26, 25, 24, 23, 25, 37, 35, 22
+Average: 24
+
+Singlethread times: 53, 44, 50, 42, 57, 47, 52, 47, 45, 49
+Average: 48
+
+
+// EXAMPLE
+"Pray do so. I shall be all anxiety."
+"Pray do so. I shall be all anxiety." ONE Handled by: Thread-2
+
+"Where, indeed?"
+"Where, indeed?" TWO Handled by: Thread-2
+
+Before the battle of Borodino our strength in proportion to the
+Before the battle of Borodino our strength in proportion to the FOUR Handled by: Thread-3
+
+[Illustration: FIG. 140.--Multiple Cartilaginous Exostoses in a
+[Illustration: FIG. 140.--Multiple Cartilaginous Exostoses in a THREE Handled by: Thread-2
+
+Thread-2 writes the remaining rows:
+Rebel spaceships, striking from a hidden base,
+have won their first victory against the evil Galactic Empire.
+
+During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon,
+the DEATH STAR,
+an armored space station with enough power to destroy an entire planet.
+
+Pursued by the Empire’s sinister agents,
+Princess Leia races home aboard her starship,
+custodian of the stolen plans that can save her people and restore freedom to the galaxy…
+
+Total Time: 24

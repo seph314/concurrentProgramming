@@ -28,41 +28,15 @@ public class Compare extends Thread {
         this.atomic = atomic;
     }
 
-    private Compare() {
-
-    }
 
     @Override
     public void run() {
-        try {
-            compare();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        compare();
     }
 
-    private void compare() throws InterruptedException {
+    private void compare() {
         Diff diff = new Diff();
 
-//        if (numberOfCores > 0) {
-//            numberOfCores--;
-//            Compare moreThreads = new Compare();
-//            moreThreads.start();
-//        }
-
-//        System.out.println("Första halvan: " + getName());
-//        for (int i=0; i < oneList.size()/2; i++){
-//            if (diff.isDiff(anotherList.get(i), oneList.get(i))){
-//                System.out.println(anotherList.get(i) + "\n" + oneList.get(i));
-//            }
-//        }
-//
-//        System.out.println("Andra halvan: " + getName());
-//        for (int i=oneList.size()/2+1; i < oneList.size()-1; i++){
-//            if (diff.isDiff(anotherList.get(i), oneList.get(i))){
-//                System.out.println(anotherList.get(i) + "\n" + oneList.get(i));
-//            }
-//        }
         long startTime = new Date().getTime();
 
         lock.lock();
@@ -85,8 +59,6 @@ public class Compare extends Thread {
 
         long endTime = new Date().getTime();
         System.out.println("Time: " + (endTime - startTime));
-
-
     }
 
     public void singleThread(){
@@ -107,5 +79,4 @@ public class Compare extends Thread {
         long endTime = new Date().getTime();
         System.out.println("Time: " + (endTime - startTime));
     }
-
 }
